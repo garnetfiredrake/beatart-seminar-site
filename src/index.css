@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background: #010101;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #010101;
+}
+
+img {
+  display: block;
+}
+
+[data-aos] {
+  will-change: transform, opacity;
+}
+
+[data-aos="hero-text-reveal"] {
+  opacity: 0;
+  transform: translate3d(-42px, 0, 0);
+  transition-duration: 1600ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-property: opacity, transform;
+}
+
+[data-aos="hero-text-reveal"].aos-animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+[data-aos="hero-video-reveal"] {
+  opacity: 0;
+  transform: translate3d(36px, 0, 0);
+  transition-duration: 1800ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-property: opacity, transform;
+}
+
+[data-aos="hero-video-reveal"].aos-animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+[data-aos="content-reveal-up"],
+[data-aos="text-reveal"],
+[data-aos="soft-reveal"] {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+  transition-duration: 1350ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-property: opacity, transform;
+}
+
+[data-aos="content-reveal-up"].aos-animate,
+[data-aos="text-reveal"].aos-animate,
+[data-aos="soft-reveal"].aos-animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+[data-aos="soft-reveal-left"] {
+  opacity: 0;
+  transform: translate3d(-30px, 16px, 0);
+  transition-duration: 1350ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-property: opacity, transform;
+}
+
+[data-aos="soft-reveal-left"].aos-animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+[data-aos="soft-image"] {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0) scale(0.985);
+  transition-duration: 1350ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-property: opacity, transform;
+}
+
+[data-aos="soft-image"].aos-animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+body[data-aos-easing] [data-aos="text-reveal"],
+body[data-aos-easing] [data-aos="soft-reveal"],
+body[data-aos-easing] [data-aos="soft-reveal-left"],
+body[data-aos-easing] [data-aos="soft-image"],
+body[data-aos-easing] [data-aos="hero-text-reveal"],
+body[data-aos-easing] [data-aos="hero-video-reveal"],
+body[data-aos-easing] [data-aos="content-reveal-up"],
+body[data-aos-easing] [data-aos="agenda-row-reveal"] {
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+[data-aos="agenda-row-reveal"] {
+  opacity: 0;
+  transform: translate3d(-28px, 0, 0);
+  transition-duration: 1150ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-property: opacity, transform;
+}
+
+[data-aos="agenda-row-reveal"].aos-animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+body[data-aos-duration] [data-aos="hero-text-reveal"] {
+  transition-duration: 1600ms;
+}
+
+body[data-aos-duration] [data-aos="hero-video-reveal"] {
+  transition-duration: 1800ms;
+}
+
+body[data-aos-duration] [data-aos="content-reveal-up"],
+body[data-aos-duration] [data-aos="text-reveal"],
+body[data-aos-duration] [data-aos="soft-reveal"],
+body[data-aos-duration] [data-aos="soft-reveal-left"],
+body[data-aos-duration] [data-aos="soft-image"] {
+  transition-duration: 1350ms;
+}
+
+body[data-aos-duration] [data-aos="agenda-row-reveal"] {
+  transition-duration: 1150ms;
+}
+
+.agenda-row-gradient-fill {
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(0, 84, 157, 0.5) 0%, rgba(0, 126, 222, 0.5) 65%, rgba(1, 180, 255, 0.5) 100%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition-duration: 1150ms;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-delay: inherit;
+}
+
+.aos-animate > .agenda-row-gradient-fill {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
