@@ -39,7 +39,7 @@ export function HeroSection({ content }: HeroSectionProps) {
       <div className="absolute left-0 top-0 h-[292px] w-full overflow-hidden bg-ink sm:h-[610px] md:h-[660px] lg:h-[740px] xl:h-[850px]" data-aos="hero-video-reveal">
         <div className="absolute inset-x-0 top-0 h-[221px] w-full overflow-hidden sm:mx-auto sm:aspect-[1512/850] sm:h-auto sm:max-w-[1512px] xl:left-1/2 xl:right-auto xl:h-[850px] xl:w-[1512px] xl:-translate-x-1/2 xl:overflow-visible xl:[aspect-ratio:auto]">
           <MuxPlayer
-            playbackId="hsdEDhSf01ox1o2aMKySOgElcTXRWd2CAPEw4k6vB12c"
+            playbackId="DSq02p01s2WU7Kf4iwcXTZuFY025VJo9ViZFkZ02b2cCNnI"
             className="h-full w-full object-contain object-top xl:h-full"
             autoPlay="muted"
             muted
