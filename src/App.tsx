@@ -12,6 +12,8 @@ import { MobileFixedActions } from "./components/MobileFixedActions";
 
 export default function App() {
   useEffect(() => {
+    let isMounted = true;
+
     AOS.init({
       duration: 1350,
       easing: "ease-out-cubic",
@@ -19,6 +21,21 @@ export default function App() {
       offset: 90,
       anchorPlacement: "top-bottom",
     });
+
+    const refreshAos = () => {
+      if (isMounted) AOS.refreshHard();
+    };
+
+    if ("fonts" in document) {
+      void document.fonts.ready.then(refreshAos);
+    }
+
+    window.addEventListener("load", refreshAos, { once: true });
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener("load", refreshAos);
+    };
   }, []);
 
   return (

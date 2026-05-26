@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { SectionHeading } from "./SectionHeading";
 
 type AgendaRow = {
@@ -18,10 +19,11 @@ export function AgendaSection({ title, rows }: AgendaSectionProps) {
       <div className="mx-auto max-w-[1320px]">
         <SectionHeading title={title} />
         <div className="mx-auto mt-[30px] w-[calc(100%-64px)] max-w-[329px] overflow-visible sm:mt-[54px] sm:max-w-[620px] xl:ml-[96px] xl:mt-[88px] xl:w-auto xl:max-w-[1149px]">
-          <div className="min-w-0">
+          <div className="agenda-table-reveal min-w-0" data-aos="agenda-table-reveal">
           <div
             className="hidden min-h-[67px] grid-cols-[145px_minmax(0,510px)_minmax(0,454px)] items-center gap-2 border-b-[2px] border-electric/80 px-3 xl:grid"
-            data-aos="agenda-row-reveal"
+            data-agenda-row
+            style={{ "--agenda-delay": "80ms" } as CSSProperties}
           >
             {["Time", "Session", "Speaker"].map((label) => (
               <div
@@ -35,8 +37,8 @@ export function AgendaSection({ title, rows }: AgendaSectionProps) {
           {rows.map((row, index) => (
             <div
               key={`${row.time}-${row.session}`}
-              data-aos="agenda-row-reveal"
-              style={{ transitionDelay: `${100 + index * 90}ms` }}
+              data-agenda-row
+              style={{ "--agenda-delay": `${125 + index * 45}ms` } as CSSProperties}
               className={`relative flex ${row.highlighted ? "min-h-[60px]" : "min-h-[96px]"} flex-col gap-[6px] overflow-hidden border-b-[2px] border-electric/80 px-[10px] py-[14px] sm:px-[18px] sm:py-[18px] xl:grid xl:min-h-[60px] xl:grid-cols-[145px_minmax(0,510px)_minmax(0,454px)] xl:items-center xl:gap-2 xl:px-3 xl:py-0 ${index === 0 ? "border-t-[2px] xl:border-t-0" : ""}`}
             >
               {row.highlighted ? (
