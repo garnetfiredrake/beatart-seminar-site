@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import MuxPlayer from "@mux/mux-player-react";
 import type { SeminarContent } from "../data/seminarContent";
 
 type HeroSectionProps = {
@@ -37,25 +38,15 @@ export function HeroSection({ content }: HeroSectionProps) {
     <section id="top" className="relative h-[450px] overflow-clip bg-ink sm:h-[650px] md:h-[700px] lg:h-[790px] xl:h-[950px]">
       <div className="absolute left-0 top-0 h-[292px] w-full overflow-hidden bg-ink sm:h-[610px] md:h-[660px] lg:h-[740px] xl:h-[850px]" data-aos="hero-video-reveal">
         <div className="absolute inset-x-0 top-0 h-[221px] w-full overflow-hidden sm:mx-auto sm:aspect-[1512/850] sm:h-auto sm:max-w-[1512px] xl:left-1/2 xl:right-auto xl:h-[850px] xl:w-[1512px] xl:-translate-x-1/2 xl:overflow-visible xl:[aspect-ratio:auto]">
-          <video
-            key={content.hero.videoSrc}
-            src={content.hero.videoSrc}
-            poster={content.hero.fallbackPosterSrc || undefined}
+          <MuxPlayer
+            playbackId="hsdEDhSf01ox1o2aMKySOgElcTXRWd2CAPEw4k6vB12c"
             className="h-full w-full object-contain object-top xl:h-full"
-            autoPlay
+            autoPlay="muted"
             muted
             loop
             playsInline
             preload="metadata"
             aria-hidden="true"
-            onEnded={(event) => {
-              event.currentTarget.currentTime = 0;
-              void event.currentTarget.play().catch(() => undefined);
-            }}
-            onCanPlay={(event) => {
-              event.currentTarget.muted = true;
-              void event.currentTarget.play().catch(() => undefined);
-            }}
           />
         </div>
         <div className="pointer-events-none absolute inset-0 bg-black" style={{ opacity: overlayOpacity }} />

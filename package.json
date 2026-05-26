@@ -12,6 +12,7 @@
     "preview": "vite preview --host 127.0.0.1 --port 5180"
   },
   "dependencies": {
+    "@mux/mux-player-react": "^3.13.0",
     "aos": "^2.3.4",
     "gsap": "^3.13.0",
     "react": "^18.3.1",
