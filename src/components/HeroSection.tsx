@@ -1,64 +1,96 @@
-import { useEffect, useState } from "react";
-import MuxPlayer from "@mux/mux-player-react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import type { SeminarContent } from "../data/seminarContent";
 
 type HeroSectionProps = {
   content: SeminarContent;
 };
 
-type HeroVideoResolution = "720p" | "1080p" | "1440p";
+type HeroVideoResolution = "1080p" | "1440p";
+
+const LazyMuxPlayer = lazy(() => import("@mux/mux-player-react"));
+const HERO_POSTER_SRC = "/images/hero-poster.webp";
+
+function shouldLoadHeroVideo(): boolean {
+  return typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
+}
 
 function getHeroVideoResolution(): HeroVideoResolution {
-  if (typeof window === "undefined") return "720p";
+  if (typeof window === "undefined") return "1080p";
   if (window.matchMedia("(min-width: 1280px)").matches) return "1440p";
-  if (window.matchMedia("(min-width: 640px)").matches) return "1080p";
-  return "720p";
+  return "1080p";
 }
 
 export function HeroSection({ content }: HeroSectionProps) {
-  const [heroVideoResolution, setHeroVideoResolution] = useState(getHeroVideoResolution);
+  const [heroVideoState, setHeroVideoState] = useState(() => ({
+    shouldLoad: shouldLoadHeroVideo(),
+    resolution: getHeroVideoResolution(),
+  }));
+  const [isHeroVideoReady, setIsHeroVideoReady] = useState(false);
 
   useEffect(() => {
     const mediaQueries = [
-      window.matchMedia("(min-width: 640px)"),
+      window.matchMedia("(min-width: 768px)"),
       window.matchMedia("(min-width: 1280px)"),
     ];
 
-    const updateResolution = () => {
-      setHeroVideoResolution(getHeroVideoResolution());
+    const updateHeroVideoState = () => {
+      setHeroVideoState({
+        shouldLoad: shouldLoadHeroVideo(),
+        resolution: getHeroVideoResolution(),
+      });
     };
 
     mediaQueries.forEach((query) => {
-      query.addEventListener("change", updateResolution);
+      query.addEventListener("change", updateHeroVideoState);
     });
 
     return () => {
       mediaQueries.forEach((query) => {
-        query.removeEventListener("change", updateResolution);
+        query.removeEventListener("change", updateHeroVideoState);
       });
     };
   }, []);
+
+  useEffect(() => {
+    setIsHeroVideoReady(false);
+  }, [heroVideoState.resolution, heroVideoState.shouldLoad]);
 
   return (
     <section id="top" className="relative h-[450px] overflow-clip bg-ink sm:h-[650px] md:h-[700px] lg:h-[790px] xl:h-[950px]">
       <div className="absolute left-0 top-0 h-[292px] w-full overflow-hidden bg-ink sm:h-[610px] md:h-[660px] lg:h-[740px] xl:h-[850px]" data-kv-from="right" data-kv-delay="0">
         <div className="absolute inset-x-0 top-0 h-[221px] w-full overflow-hidden sm:mx-auto sm:aspect-[1512/850] sm:h-auto sm:max-w-[1512px] xl:left-1/2 xl:right-auto xl:h-[850px] xl:w-[1512px] xl:-translate-x-1/2 xl:overflow-visible xl:[aspect-ratio:auto]">
-          <MuxPlayer
-            playbackId="Tf00rcBlGc102wnM202vlVg7H4z00u4azDx7zzO41e35Q7c"
-            streamType="on-demand"
-            preferPlayback="mse"
-            minResolution={heroVideoResolution}
-            maxResolution={heroVideoResolution}
-            renditionOrder="desc"
-            capRenditionToPlayerSize={false}
-            className="h-full w-full object-contain object-top xl:h-full"
-            autoPlay="muted"
-            muted
-            loop
-            playsInline
-            preload="metadata"
+          <img
+            src={HERO_POSTER_SRC}
+            alt=""
             aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-contain object-top xl:h-full"
+            decoding="async"
+            fetchPriority="high"
+            draggable={false}
           />
+          {heroVideoState.shouldLoad ? (
+            <Suspense fallback={null}>
+              <LazyMuxPlayer
+                playbackId="Tf00rcBlGc102wnM202vlVg7H4z00u4azDx7zzO41e35Q7c"
+                streamType="on-demand"
+                preferPlayback="mse"
+                minResolution={heroVideoState.resolution}
+                maxResolution={heroVideoState.resolution}
+                renditionOrder="desc"
+                capRenditionToPlayerSize={false}
+                className="relative z-[1] h-full w-full object-contain object-top transition-opacity duration-700 xl:h-full"
+                style={{ opacity: isHeroVideoReady ? 1 : 0 }}
+                autoPlay="muted"
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={HERO_POSTER_SRC}
+                aria-hidden="true"
+                onLoadedData={() => setIsHeroVideoReady(true)}
+              />
+            </Suspense>
+          ) : null}
         </div>
         <div className="pointer-events-none absolute inset-0 bg-black" data-hero-overlay style={{ opacity: 0.18 }} />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[110px] bg-gradient-to-b from-transparent to-ink sm:h-[220px] md:h-[240px] lg:h-[260px] xl:h-[160px]" />
