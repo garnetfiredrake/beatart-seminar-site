@@ -18,16 +18,14 @@ export function SpeakersSection({ title, speakers }: SpeakersSectionProps) {
     <section id="speakers" className="h-auto bg-ink px-0 pb-0 pt-0 xl:h-[850px] xl:px-0 xl:pb-0 xl:pt-[95px]">
       <div className="mx-auto max-w-[1320px]">
         <SectionHeading title={title} />
-        <div className="mx-auto mt-[20px] grid grid-cols-1 gap-0 md:mt-[107px] md:max-w-[570px] md:grid-cols-2 md:gap-[70px] xl:max-w-[1210px] xl:grid-cols-[repeat(4,250px)]">
-          {speakers.map((speaker, index) => (
+        <div className="mx-auto mt-[20px] grid grid-cols-1 gap-0 md:mt-[107px] md:max-w-[570px] md:grid-cols-2 md:gap-[70px] xl:max-w-[1210px] xl:grid-cols-[repeat(4,250px)]" data-reveal-stagger="soft-image" data-reverse data-reveal-start="top 78%" data-stagger-amount="0.08">
+          {speakers.map((speaker) => (
             <article
               key={speaker.name}
               className="group relative h-[303px] text-center md:h-auto"
             >
               <div
                 className="absolute inset-x-0 top-0 mx-auto h-[140px] w-[140px] md:static md:h-[250px] md:w-[250px]"
-                data-aos="soft-image"
-                data-aos-delay={index * 100}
               >
                 <img
                   src={speaker.imageSrc}
@@ -35,7 +33,7 @@ export function SpeakersSection({ title, speakers }: SpeakersSectionProps) {
                   className="h-full w-full object-contain transition duration-700 group-hover:scale-[1.045]"
                 />
               </div>
-              <div className="absolute left-0 top-[172px] w-full md:static" data-aos="content-reveal-up" data-aos-delay={index * 100 + 150}>
+              <div className="absolute left-0 top-[172px] w-full md:static">
                 <p className="font-display text-[22px] font-bold leading-[26px] tracking-[-0.05em] text-white md:mt-11 md:text-2xl md:leading-none">
                   {speaker.agency}
                 </p>

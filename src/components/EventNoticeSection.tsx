@@ -15,7 +15,7 @@ export function EventNoticeSection({ title, notice }: EventNoticeSectionProps) {
     <section id="notice" className="h-auto bg-ink px-0 pb-[40px] pt-0 xl:h-[786px] xl:px-0 xl:pb-0 xl:pt-[85px]">
       <div className="mx-auto max-w-[1320px]">
         <SectionHeading title={title} />
-        <ul className="mx-auto mt-[30px] w-[calc(100%-64px)] max-w-[329px] list-disc pl-[18px] text-left font-serif text-[12px] leading-[24px] text-frost sm:max-w-[620px] lg:max-w-[700px] xl:mt-[125px] xl:max-w-[938px] xl:pl-7 xl:text-lg xl:leading-9" data-aos="content-reveal-up">
+        <ul className="mx-auto mt-[30px] w-[calc(100%-64px)] max-w-[329px] list-disc pl-[18px] text-left font-serif text-[12px] leading-[24px] text-frost sm:max-w-[620px] lg:max-w-[700px] xl:mt-[125px] xl:max-w-[938px] xl:pl-7 xl:text-lg xl:leading-9" data-reveal="up" data-reverse>
           {notice.paragraphs.map((paragraph) => (
             <li key={paragraph} className="text-left">
               {paragraph.includes(notice.email) ? (

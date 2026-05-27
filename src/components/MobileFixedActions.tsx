@@ -23,10 +23,6 @@ export function MobileFixedActions({ accessLabel, shareLabel, topLabel }: Mobile
     }
   };
 
-  const scrollToTop = () => {
-    document.getElementById("top")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   return (
     <div className="fixed right-[13px] z-50 md:hidden">
       <a
@@ -51,10 +47,9 @@ export function MobileFixedActions({ accessLabel, shareLabel, topLabel }: Mobile
         </svg>
       </button>
 
-      <button
-        type="button"
+      <a
+        href="#top"
         aria-label={topLabel}
-        onClick={scrollToTop}
         className="fixed left-[10px] bottom-[100px] flex h-[54px] w-[54px] items-center justify-center rounded-full border border-frost bg-[#161d21]/8 text-white shadow-[0_0_18px_rgba(1,180,255,0.12)] backdrop-blur-sm"
       >
         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" aria-hidden="true">
@@ -62,7 +57,7 @@ export function MobileFixedActions({ accessLabel, shareLabel, topLabel }: Mobile
           <path d="M7.5 12.5L12.5 7.5L17.5 12.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M6.5 4.5H18.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
         </svg>
-      </button>
+      </a>
     </div>
   );
 }

@@ -14,13 +14,11 @@ export function InfoStrip({ items }: InfoStripProps) {
 
   return (
     <section className="bg-ink px-0 py-0 sm:px-0 sm:py-[54px] xl:h-[300px] xl:px-0 xl:py-0">
-      <div className="relative mx-auto h-[454px] max-w-[393px] sm:hidden">
+      <div className="relative mx-auto h-[454px] max-w-[393px] sm:hidden" data-reveal-stagger="up" data-reverse data-reveal-start="top 82%" data-stagger-amount="0.1">
         {items.map((item, index) => (
           <article
             key={item.title}
             className={`absolute inset-x-0 ${mobileTopClass[index]} text-center`}
-            data-aos="content-reveal-up"
-            data-aos-delay={index * 120}
           >
             <img src={item.iconSrc} alt={item.iconAlt} className="mx-auto h-[18px] w-[18px] object-contain" />
             <div className="mx-auto mt-[15px] h-px w-[227px] bg-electric/70" aria-hidden="true" />
@@ -38,13 +36,11 @@ export function InfoStrip({ items }: InfoStripProps) {
         ))}
       </div>
 
-      <div className="mx-auto hidden w-[calc(100%-64px)] max-w-[560px] flex-col gap-[56px] sm:flex xl:hidden">
+      <div className="mx-auto hidden w-[calc(100%-64px)] max-w-[560px] flex-col gap-[56px] sm:flex xl:hidden" data-reveal-stagger="up" data-reverse data-reveal-start="top 82%" data-stagger-amount="0.1">
         {items.map((item, index) => (
           <article
             key={item.title}
             className="text-center"
-            data-aos="content-reveal-up"
-            data-aos-delay={index * 100}
           >
             <img src={item.iconSrc} alt={item.iconAlt} className="mx-auto h-7 w-7 object-contain" />
             <h2 className="mt-4 font-display text-[30px] font-semibold leading-none tracking-[-0.05em] text-frost">
@@ -61,13 +57,11 @@ export function InfoStrip({ items }: InfoStripProps) {
       </div>
 
       <div className="relative mx-auto hidden h-full max-w-[1320px] xl:block">
-        <div className="grid grid-cols-[repeat(3,363px)] gap-[115px]">
+        <div className="grid grid-cols-[repeat(3,363px)] gap-[115px]" data-reveal-stagger="up" data-reverse data-reveal-start="top 82%" data-stagger-amount="0.1">
           {items.map((item, index) => (
             <article
               key={item.title}
               className="relative h-[300px] w-[363px]"
-              data-aos="content-reveal-up"
-              data-aos-delay={index * 100}
             >
               <div className="absolute left-0 top-[110px] flex items-center gap-11">
                 <img

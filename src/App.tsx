@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import AOS from "aos";
 import { seminarContent } from "./data/seminarContent";
 import { HeroSection } from "./components/HeroSection";
 import { InfoStrip } from "./components/InfoStrip";
@@ -8,38 +6,13 @@ import { AgendaSection } from "./components/AgendaSection";
 import { SpeakersSection } from "./components/SpeakersSection";
 import { EventNoticeSection } from "./components/EventNoticeSection";
 import { Footer } from "./components/Footer";
+import { FloatingHeader } from "./components/FloatingHeader";
 import { MobileFixedActions } from "./components/MobileFixedActions";
 
 export default function App() {
-  useEffect(() => {
-    let isMounted = true;
-
-    AOS.init({
-      duration: 1350,
-      easing: "ease-out-cubic",
-      once: true,
-      offset: 90,
-      anchorPlacement: "top-bottom",
-    });
-
-    const refreshAos = () => {
-      if (isMounted) AOS.refreshHard();
-    };
-
-    if ("fonts" in document) {
-      void document.fonts.ready.then(refreshAos);
-    }
-
-    window.addEventListener("load", refreshAos, { once: true });
-
-    return () => {
-      isMounted = false;
-      window.removeEventListener("load", refreshAos);
-    };
-  }, []);
-
   return (
     <div className="min-h-screen overflow-x-clip bg-ink text-white selection:bg-electric selection:text-ink">
+      <FloatingHeader logoSrc={seminarContent.brand.logoSrc} logoAlt={seminarContent.brand.logoAlt} />
       <main>
         <HeroSection content={seminarContent} />
         <InfoStrip items={seminarContent.info} />
