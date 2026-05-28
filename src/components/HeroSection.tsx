@@ -6,6 +6,13 @@ type HeroSectionProps = {
 };
 
 type HeroVideoResolution = "720p" | "1080p" | "1440p";
+type HeroVideoSession = {
+  playbackId: string;
+  expiresAt?: number;
+  tokens?: {
+    playback?: string;
+  };
+};
 
 const LazyMuxPlayer = lazy(() => import("@mux/mux-player-react"));
 const HERO_POSTER_SRC = "/images/hero-poster.webp";
@@ -19,7 +26,41 @@ function getHeroVideoResolution(): HeroVideoResolution {
 
 export function HeroSection({ content }: HeroSectionProps) {
   const [heroVideoResolution, setHeroVideoResolution] = useState(getHeroVideoResolution);
+  const [heroVideoSession, setHeroVideoSession] = useState<HeroVideoSession | null>(null);
   const [isHeroVideoReady, setIsHeroVideoReady] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadHeroVideoSession() {
+      try {
+        const response = await fetch("/api/hero-video-session", {
+          cache: "no-store",
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Hero video session failed: ${response.status}`);
+        }
+
+        const session = (await response.json()) as HeroVideoSession;
+
+        if (!controller.signal.aborted && session.playbackId) {
+          setHeroVideoSession(session);
+        }
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          console.warn(error);
+        }
+      }
+    }
+
+    void loadHeroVideoSession();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   useEffect(() => {
     const mediaQueries = [
@@ -44,7 +85,7 @@ export function HeroSection({ content }: HeroSectionProps) {
 
   useEffect(() => {
     setIsHeroVideoReady(false);
-  }, [heroVideoResolution]);
+  }, [heroVideoResolution, heroVideoSession?.playbackId]);
 
   return (
     <section id="top" className="relative h-[450px] overflow-clip bg-ink sm:h-[650px] md:h-[700px] lg:h-[790px] xl:h-[950px]">
@@ -59,28 +100,32 @@ export function HeroSection({ content }: HeroSectionProps) {
             fetchPriority="high"
             draggable={false}
           />
-          <Suspense fallback={null}>
-            <LazyMuxPlayer
-              playbackId="Tf00rcBlGc102wnM202vlVg7H4z00u4azDx7zzO41e35Q7c"
-              streamType="on-demand"
-              preferPlayback="mse"
-              minResolution={heroVideoResolution}
-              maxResolution={heroVideoResolution}
-              renditionOrder="desc"
-              capRenditionToPlayerSize={false}
-              className="relative z-[1] h-full w-full object-contain object-top transition-opacity duration-700 xl:h-full"
-              style={{ opacity: isHeroVideoReady ? 1 : 0 }}
-              autoPlay="muted"
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={HERO_POSTER_SRC}
-              aria-hidden="true"
-              onLoadedData={() => setIsHeroVideoReady(true)}
-              onCanPlay={() => setIsHeroVideoReady(true)}
-            />
-          </Suspense>
+          {heroVideoSession ? (
+            <Suspense fallback={null}>
+              <LazyMuxPlayer
+                key={`${heroVideoSession.playbackId}-${heroVideoSession.expiresAt ?? "session"}`}
+                playbackId={heroVideoSession.playbackId}
+                tokens={heroVideoSession.tokens}
+                streamType="on-demand"
+                preferPlayback="mse"
+                minResolution={heroVideoResolution}
+                maxResolution={heroVideoResolution}
+                renditionOrder="desc"
+                capRenditionToPlayerSize={false}
+                className="relative z-[1] h-full w-full object-contain object-top transition-opacity duration-700 xl:h-full"
+                style={{ opacity: isHeroVideoReady ? 1 : 0 }}
+                autoPlay="muted"
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={HERO_POSTER_SRC}
+                aria-hidden="true"
+                onLoadedData={() => setIsHeroVideoReady(true)}
+                onCanPlay={() => setIsHeroVideoReady(true)}
+              />
+            </Suspense>
+          ) : null}
         </div>
         <div className="pointer-events-none absolute inset-0 bg-black" data-hero-overlay style={{ opacity: 0.18 }} />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[110px] bg-gradient-to-b from-transparent to-ink sm:h-[220px] md:h-[240px] lg:h-[260px] xl:h-[160px]" />
