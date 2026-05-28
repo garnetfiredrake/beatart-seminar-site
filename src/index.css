@@ -35,10 +35,8 @@ img {
   position: absolute !important;
   top: -1px !important;
   left: -1px !important;
-  right: -1px !important;
-  bottom: -1px !important;
-  width: auto !important;
-  height: auto !important;
+  width: calc(100% + 2px) !important;
+  height: calc(100% + 2px) !important;
   background: #010101;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
