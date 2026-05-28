@@ -25,6 +25,42 @@ img {
   display: block;
 }
 
+.hero-media-frame {
+  background: #010101;
+  isolation: isolate;
+}
+
+.hero-media-poster,
+.hero-video-player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #010101;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.hero-media-poster {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.hero-video-player {
+  overflow: hidden;
+  contain: paint;
+}
+
+.hero-video-player::part(video),
+.hero-video-player::part(poster),
+.hero-video-player::part(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
 [data-kv-from],
 [data-reveal],
 [data-reveal-stagger] > * {

@@ -90,12 +90,12 @@ export function HeroSection({ content }: HeroSectionProps) {
   return (
     <section id="top" className="relative h-[450px] overflow-clip bg-ink sm:h-[650px] md:h-[700px] lg:h-[790px] xl:h-[950px]">
       <div className="absolute left-0 top-0 h-[292px] w-full overflow-hidden bg-ink sm:h-[610px] md:h-[660px] lg:h-[740px] xl:h-[850px]" data-kv-from="right" data-kv-delay="0">
-        <div className="absolute inset-x-0 top-0 aspect-[1512/850] w-full overflow-hidden sm:mx-auto sm:max-w-[1512px] xl:left-1/2 xl:right-auto xl:h-[850px] xl:w-[1512px] xl:-translate-x-1/2 xl:overflow-visible xl:[aspect-ratio:auto]">
+        <div className="hero-media-frame absolute inset-x-0 top-0 aspect-[1512/850] w-full overflow-hidden sm:mx-auto sm:max-w-[1512px] xl:left-1/2 xl:right-auto xl:h-[850px] xl:w-[1512px] xl:-translate-x-1/2 xl:[aspect-ratio:auto]">
           <img
             src={HERO_POSTER_SRC}
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-contain object-top xl:h-full"
+            className="hero-media-poster absolute inset-0 h-full w-full"
             decoding="async"
             fetchPriority="high"
             draggable={false}
@@ -112,7 +112,7 @@ export function HeroSection({ content }: HeroSectionProps) {
                 maxResolution={heroVideoResolution}
                 renditionOrder="desc"
                 capRenditionToPlayerSize={false}
-                className="relative z-[1] h-full w-full object-contain object-top transition-opacity duration-700 xl:h-full"
+                className="hero-video-player relative z-[1] h-full w-full transition-opacity duration-700"
                 style={{ opacity: isHeroVideoReady ? 1 : 0 }}
                 autoPlay="muted"
                 muted
