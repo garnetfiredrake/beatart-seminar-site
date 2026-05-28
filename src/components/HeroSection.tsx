@@ -89,11 +89,24 @@ export function HeroSection({ content }: HeroSectionProps) {
 
   return (
     <section id="top" className="relative h-[450px] overflow-clip bg-ink sm:h-[650px] md:h-[700px] lg:h-[790px] xl:h-[950px]">
+<<<<<<< Updated upstream
       <div className="absolute left-0 top-0 h-[292px] w-full overflow-hidden bg-ink sm:h-[610px] md:h-[660px] lg:h-[740px] xl:h-[850px]" data-kv-from="right" data-kv-delay="0">
         <div className="hero-media-frame absolute inset-x-0 top-0 aspect-[1512/850] w-full overflow-hidden sm:mx-auto sm:max-w-[1512px] xl:left-1/2 xl:right-auto xl:h-[850px] xl:w-[1512px] xl:-translate-x-1/2 xl:[aspect-ratio:auto]">
           <img
             src={HERO_POSTER_SRC}
             alt=""
+=======
+      <div className="absolute left-0 top-0 h-[292px] w-full overflow-hidden bg-ink sm:h-[610px] md:h-[660px] lg:h-[740px] xl:h-[850px]" data-kv-from="right" data-kv-delay="0.06" data-kv-distance="110" data-kv-duration="1.45">
+        <div className="absolute inset-x-0 top-0 h-[221px] w-full overflow-hidden sm:mx-auto sm:aspect-[1512/850] sm:h-auto sm:max-w-[1512px] xl:left-1/2 xl:right-auto xl:h-[850px] xl:w-[1512px] xl:-translate-x-1/2 xl:overflow-visible xl:[aspect-ratio:auto]">
+          <MuxPlayer
+            playbackId="ozBbHDhW6Noi71TFb00tsI7zpdF202dMd4eakM6pA91VQ"
+            className="h-full w-full object-contain object-top xl:h-full"
+            autoPlay="muted"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+>>>>>>> Stashed changes
             aria-hidden="true"
             className="hero-media-poster absolute inset-0 h-full w-full"
             decoding="async"
@@ -136,7 +149,9 @@ export function HeroSection({ content }: HeroSectionProps) {
           <div
             className="absolute left-[30px] top-[72px] w-[157px]"
             data-kv-from="left"
-            data-kv-delay="0.45"
+            data-kv-delay="0.32"
+            data-kv-distance="72"
+            data-kv-duration="1.24"
           >
             <h1 className="font-display tracking-[-0.05em] text-white">
               <span className="block whitespace-nowrap text-[28px] leading-[34px]">{content.hero.title.first}</span>
@@ -150,14 +165,19 @@ export function HeroSection({ content }: HeroSectionProps) {
           <p
             className="absolute inset-x-0 top-[200px] mx-auto w-[329px] max-w-[calc(100%-60px)] text-left font-serif text-[12px] leading-[20px] text-mist"
             data-kv-from="left"
-            data-kv-delay="0.7"
+            data-kv-delay="0.52"
+            data-kv-distance="72"
+            data-kv-duration="1.2"
           >
             {content.hero.subtitle}
           </p>
           <div
             className="absolute inset-x-0 top-[254px] mx-auto w-[329px] max-w-[calc(100%-60px)] text-left"
-            data-kv-from="left"
-            data-kv-delay="0.95"
+            data-kv-from="up"
+            data-kv-delay="0.78"
+            data-kv-distance="42"
+            data-kv-duration="1.2"
+            data-hero-intro
           >
             <img src={content.intro.iconSrc} alt={content.intro.iconAlt} className="h-[18px] w-[18px] shrink-0" aria-hidden="true" />
             <div className="mt-[10px] w-full">
@@ -171,7 +191,9 @@ export function HeroSection({ content }: HeroSectionProps) {
           <div
             className="absolute left-0 top-[118px] w-full max-w-[440px] lg:top-[145px] lg:max-w-[560px] xl:left-[96px] xl:top-[182px] xl:max-w-[675px]"
             data-kv-from="left"
-            data-kv-delay="0.45"
+            data-kv-delay="0.32"
+            data-kv-distance="86"
+            data-kv-duration="1.28"
           >
             <h1 className="font-display tracking-[-0.05em] text-white">
               <span className="block whitespace-nowrap text-[42px] leading-[56px] lg:text-[58px] lg:leading-[74px] xl:text-[88px] xl:leading-[112px]">
@@ -185,16 +207,23 @@ export function HeroSection({ content }: HeroSectionProps) {
           </div>
           <div
             className="absolute inset-x-0 top-[284px] mx-auto hidden w-full max-w-[620px] text-left sm:block md:top-[380px] lg:top-[430px] lg:max-w-[620px] xl:hidden"
-            data-kv-from="left"
-            data-kv-delay="0.7"
           >
-            <p className="font-serif text-[15px] leading-[28px] text-mist lg:text-base lg:leading-8">
+            <p
+              className="font-serif text-[15px] leading-[28px] text-mist lg:text-base lg:leading-8"
+              data-kv-from="left"
+              data-kv-delay="0.52"
+              data-kv-distance="86"
+              data-kv-duration="1.22"
+            >
               {content.hero.subtitle}
             </p>
             <div
               className="mt-[24px] md:mt-[28px]"
-              data-kv-from="left"
-              data-kv-delay="0.95"
+              data-kv-from="up"
+              data-kv-delay="0.78"
+              data-kv-distance="48"
+              data-kv-duration="1.22"
+              data-hero-intro
             >
               <img src={content.intro.iconSrc} alt={content.intro.iconAlt} className="h-7 w-7 shrink-0 lg:h-8 lg:w-8" aria-hidden="true" />
               <div className="mt-[12px] w-full">
@@ -206,14 +235,19 @@ export function HeroSection({ content }: HeroSectionProps) {
           <p
             className="absolute hidden font-serif text-mist xl:left-[96px] xl:top-[450px] xl:block xl:w-[510px] xl:text-left xl:text-lg xl:leading-9"
             data-kv-from="left"
-            data-kv-delay="0.7"
+            data-kv-delay="0.52"
+            data-kv-distance="86"
+            data-kv-duration="1.22"
           >
             {content.hero.subtitle}
           </p>
           <div
             className="absolute hidden text-left xl:left-[327px] xl:top-[724px] xl:flex xl:w-[802px] xl:flex-row xl:items-start xl:gap-5"
-            data-kv-from="left"
-            data-kv-delay="0.95"
+            data-kv-from="up"
+            data-kv-delay="0.78"
+            data-kv-distance="52"
+            data-kv-duration="1.22"
+            data-hero-intro
           >
             <img src={content.intro.iconSrc} alt={content.intro.iconAlt} className="h-7 w-7 shrink-0 lg:h-8 lg:w-8 xl:mt-1 xl:h-9 xl:w-9" aria-hidden="true" />
             <div className="w-full xl:w-[746px]">

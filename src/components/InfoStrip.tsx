@@ -14,7 +14,7 @@ export function InfoStrip({ items }: InfoStripProps) {
 
   return (
     <section className="bg-ink px-0 py-0 sm:px-0 sm:py-[54px] xl:h-[300px] xl:px-0 xl:py-0">
-      <div className="relative mx-auto h-[454px] max-w-[393px] sm:hidden" data-reveal-stagger="up" data-reverse data-reveal-start="top 82%" data-stagger-amount="0.1">
+      <div className="relative mx-auto h-[454px] max-w-[393px] sm:hidden" data-reveal-stagger="up" data-reverse data-reveal-after="hero-intro" data-reveal-start="top 82%" data-reveal-distance="34" data-reveal-duration="1.22" data-stagger-amount="0.5">
         {items.map((item, index) => (
           <article
             key={item.title}
@@ -36,7 +36,7 @@ export function InfoStrip({ items }: InfoStripProps) {
         ))}
       </div>
 
-      <div className="mx-auto hidden w-[calc(100%-64px)] max-w-[560px] flex-col gap-[56px] sm:flex xl:hidden" data-reveal-stagger="up" data-reverse data-reveal-start="top 82%" data-stagger-amount="0.1">
+      <div className="mx-auto hidden w-[calc(100%-64px)] max-w-[560px] flex-col gap-[56px] sm:flex xl:hidden" data-reveal-stagger="up" data-reverse data-reveal-after="hero-intro" data-reveal-start="top 82%" data-reveal-distance="38" data-reveal-duration="1.26" data-stagger-amount="0.5">
         {items.map((item, index) => (
           <article
             key={item.title}
@@ -57,7 +57,7 @@ export function InfoStrip({ items }: InfoStripProps) {
       </div>
 
       <div className="relative mx-auto hidden h-full max-w-[1320px] xl:block">
-        <div className="grid grid-cols-[repeat(3,363px)] gap-[115px]" data-reveal-stagger="up" data-reverse data-reveal-start="top 82%" data-stagger-amount="0.1">
+        <div className="grid grid-cols-[repeat(3,363px)] gap-[115px]" data-reveal-stagger="up" data-reverse data-reveal-after="hero-intro" data-reveal-start="top 82%" data-reveal-distance="42" data-reveal-duration="1.28" data-stagger-amount="0.5">
           {items.map((item, index) => (
             <article
               key={item.title}
