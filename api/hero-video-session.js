@@ -2,6 +2,7 @@ import { createSign, randomUUID } from "node:crypto";
 
 const DEFAULT_TOKEN_TTL_SECONDS = 15 * 60;
 const MAX_TOKEN_TTL_SECONDS = 60 * 60;
+const DEFAULT_HERO_PLAYBACK_ID = "ozBbHDhW6Noi71TFb00tsI7zpdF202dMd4eakM6pA91VQ";
 
 function base64Url(input) {
   return Buffer.from(input)
@@ -69,22 +70,32 @@ function signMuxPlaybackToken({ playbackId, expiresAt, sessionId }) {
 
 function getConfiguredPlayback() {
   const signedPlaybackId = process.env.MUX_HERO_SIGNED_PLAYBACK_ID;
+  const publicPlaybackId = process.env.MUX_HERO_PLAYBACK_ID;
   const hasSigningCredentials = Boolean(process.env.MUX_SIGNING_KEY_ID && process.env.MUX_SIGNING_PRIVATE_KEY);
 
-  if (!signedPlaybackId) {
+  if (publicPlaybackId) {
     return {
-      error: "hero_video_signed_playback_unconfigured",
+      playbackId: publicPlaybackId,
+      requiresToken: false,
     };
   }
 
-  if (!hasSigningCredentials) {
+  if (signedPlaybackId && hasSigningCredentials) {
+    return {
+      playbackId: signedPlaybackId,
+      requiresToken: true,
+    };
+  }
+
+  if (signedPlaybackId) {
     return {
       error: "hero_video_signing_unconfigured",
     };
   }
 
   return {
-    playbackId: signedPlaybackId,
+    playbackId: DEFAULT_HERO_PLAYBACK_ID,
+    requiresToken: false,
   };
 }
 
@@ -112,17 +123,14 @@ export default function handler(request, response) {
 
   const sessionId = randomUUID();
   const expiresAt = Math.floor(Date.now() / 1000) + getTokenTtlSeconds();
-  const playbackToken = signMuxPlaybackToken({ playbackId: configuredPlayback.playbackId, expiresAt, sessionId });
-
-  if (!playbackToken) {
-    sendJson(response, 503, { error: "hero_video_token_unavailable" });
-    return;
-  }
+  const playbackToken = configuredPlayback.requiresToken
+    ? signMuxPlaybackToken({ playbackId: configuredPlayback.playbackId, expiresAt, sessionId })
+    : null;
 
   sendJson(response, 200, {
     playbackId: configuredPlayback.playbackId,
     expiresAt,
-    tokens: { playback: playbackToken },
-    policy: "signed",
+    tokens: playbackToken ? { playback: playbackToken } : undefined,
+    policy: playbackToken ? "signed" : "server-session",
   });
 }
