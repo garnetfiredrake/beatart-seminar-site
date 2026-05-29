@@ -69,31 +69,22 @@ function signMuxPlaybackToken({ playbackId, expiresAt, sessionId }) {
 
 function getConfiguredPlayback() {
   const signedPlaybackId = process.env.MUX_HERO_SIGNED_PLAYBACK_ID;
-  const publicPlaybackId = process.env.MUX_HERO_PLAYBACK_ID;
   const hasSigningCredentials = Boolean(process.env.MUX_SIGNING_KEY_ID && process.env.MUX_SIGNING_PRIVATE_KEY);
 
-  if (signedPlaybackId && hasSigningCredentials) {
+  if (!signedPlaybackId) {
     return {
-      playbackId: signedPlaybackId,
-      requiresToken: true,
+      error: "hero_video_signed_playback_unconfigured",
     };
   }
 
-  if (publicPlaybackId) {
-    return {
-      playbackId: publicPlaybackId,
-      requiresToken: false,
-    };
-  }
-
-  if (signedPlaybackId) {
+  if (!hasSigningCredentials) {
     return {
       error: "hero_video_signing_unconfigured",
     };
   }
 
   return {
-    error: "hero_video_unconfigured",
+    playbackId: signedPlaybackId,
   };
 }
 
@@ -121,14 +112,17 @@ export default function handler(request, response) {
 
   const sessionId = randomUUID();
   const expiresAt = Math.floor(Date.now() / 1000) + getTokenTtlSeconds();
-  const playbackToken = configuredPlayback.requiresToken
-    ? signMuxPlaybackToken({ playbackId: configuredPlayback.playbackId, expiresAt, sessionId })
-    : null;
+  const playbackToken = signMuxPlaybackToken({ playbackId: configuredPlayback.playbackId, expiresAt, sessionId });
+
+  if (!playbackToken) {
+    sendJson(response, 503, { error: "hero_video_token_unavailable" });
+    return;
+  }
 
   sendJson(response, 200, {
     playbackId: configuredPlayback.playbackId,
     expiresAt,
-    tokens: playbackToken ? { playback: playbackToken } : undefined,
-    policy: playbackToken ? "signed" : "server-session",
+    tokens: { playback: playbackToken },
+    policy: "signed",
   });
 }

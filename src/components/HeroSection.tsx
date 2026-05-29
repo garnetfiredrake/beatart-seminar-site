@@ -48,9 +48,9 @@ export function HeroSection({ content }: HeroSectionProps) {
         if (!controller.signal.aborted && session.playbackId) {
           setHeroVideoSession(session);
         }
-      } catch (error) {
+      } catch {
         if (!controller.signal.aborted) {
-          console.warn(error);
+          setHeroVideoSession(null);
         }
       }
     }
@@ -119,7 +119,6 @@ export function HeroSection({ content }: HeroSectionProps) {
                 loop
                 playsInline
                 preload="metadata"
-                poster={HERO_POSTER_SRC}
                 aria-hidden="true"
                 onLoadedData={() => setIsHeroVideoReady(true)}
                 onCanPlay={() => setIsHeroVideoReady(true)}
