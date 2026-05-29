@@ -9,6 +9,12 @@ output/
 # Vite development cache
 .vite/
 
+# Local media experiments
+public/images/webm/
+public/images/hero_section_desktop.mp4
+public/images/hero_section_desktop_V1.mp4
+public/images/hero_section_desktop_V2.mp4
+
 # Log files
 *.log
 npm-debug.log*
