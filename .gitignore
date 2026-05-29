@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+node_modules (1)/
 
 # Production build outputs
 dist/

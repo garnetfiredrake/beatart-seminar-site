@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import type { SeminarContent } from "../data/seminarContent";
+import { SplineHero } from "./SplineHero";
 
 type HeroSectionProps = {
   content: SeminarContent;
@@ -16,6 +17,7 @@ type HeroVideoSession = {
 
 const LazyMuxPlayer = lazy(() => import("@mux/mux-player-react"));
 const HERO_POSTER_SRC = "/images/hero-poster.webp";
+const FALLBACK_HERO_PLAYBACK_ID = "ozBbHDhW6Noi71TFb00tsI7zpdF202dMd4eakM6pA91VQ";
 
 function getHeroVideoResolution(): HeroVideoResolution {
   if (typeof window === "undefined") return "1080p";
@@ -48,9 +50,10 @@ export function HeroSection({ content }: HeroSectionProps) {
         if (!controller.signal.aborted && session.playbackId) {
           setHeroVideoSession(session);
         }
-      } catch {
+      } catch (error) {
         if (!controller.signal.aborted) {
-          setHeroVideoSession(null);
+          console.warn(error);
+          setHeroVideoSession({ playbackId: FALLBACK_HERO_PLAYBACK_ID });
         }
       }
     }
@@ -119,6 +122,7 @@ export function HeroSection({ content }: HeroSectionProps) {
                 loop
                 playsInline
                 preload="metadata"
+                poster={HERO_POSTER_SRC}
                 aria-hidden="true"
                 onLoadedData={() => setIsHeroVideoReady(true)}
                 onCanPlay={() => setIsHeroVideoReady(true)}
@@ -126,6 +130,7 @@ export function HeroSection({ content }: HeroSectionProps) {
             </Suspense>
           ) : null}
         </div>
+        <SplineHero className="spline-hero--video-overlay" />
         <div className="pointer-events-none absolute inset-0 bg-black" data-hero-overlay style={{ opacity: 0.18 }} />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[110px] bg-gradient-to-b from-transparent to-ink sm:h-[220px] md:h-[240px] lg:h-[260px] xl:h-[160px]" />
       </div>
